@@ -1,0 +1,81 @@
+.infoBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 10rem;
+  color: var(--VIOLET-LIGHT);
+  background: var(--GREY-DARK);
+}
+.infoBar__page {
+  font-size: 2rem;
+  padding: 2rem;
+}
+.infoBar__user {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+.infoBar__image {
+  overflow: hidden;
+  border-radius: 50%;
+  height: 4rem;
+  width: 4rem;
+}
+
+.infoBar__menu--link {
+  margin-top: 1rem;
+}
+
+.infoBar__profile {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.show-hide {
+  position: absolute;
+  top: 10rem;
+  right: 0;
+  height: 0;
+  width: 20rem;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  text-align: center;
+  transition: all 0.3s;
+}
+.infoBar__profile:hover .show-hide {
+  padding: 1rem;
+  background: var(--FONT);
+  box-shadow: 0 0 2rem rgba(0, 0, 0, 0.2);
+  height: fit-content;
+  width: 20rem;
+  opacity: 1;
+  pointer-events: visible;
+  visibility: visible;
+}
+.infoBar__profile:hover .show-hide a {
+  display: block;
+  color: var(--VIOLET-DARK);
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}
+.infoBar__profile:hover .show-hide a:hover {
+  color: var(--VIOLET-MEDIUM);
+}
+.infoBar__user p {
+  color: var(--FONT);
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.logout-btn {
+  padding: 0.5rem 2rem;
+  margin-bottom: 2rem;
+  background: red;
+  color: #fff;
+  font-weight: 700;
+}

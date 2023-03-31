@@ -1,0 +1,43 @@
+.profile {
+  max-width: 120rem;
+  margin: 1rem auto;
+}
+
+.profile__backdrop input {
+  width: 100%;
+}
+
+.profile__img {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 8rem;
+  height: 8rem;
+  margin-bottom: 2rem;
+}
+
+.profile__img img {
+  object-fit: fill;
+  width: 8rem;
+  height: 8rem;
+}
+
+.profile__main {
+  font-size: 1.6rem;
+  margin-bottom: 2rem;
+}
+
+.profile__legal {
+  font-size: 1.4rem;
+  margin-bottom: 3rem;
+}
+
+.block {
+  display: block;
+  text-align: center;
+}
+
+.form-action {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}

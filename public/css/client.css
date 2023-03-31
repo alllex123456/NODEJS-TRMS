@@ -1,0 +1,85 @@
+.client {
+  padding: 2rem;
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-columns: 1fr 2fr;
+}
+
+.client__details {
+  position: relative;
+  padding: 1rem;
+  font-size: 1.4rem;
+}
+
+.client__details > div {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--TEAL-LIGHT);
+}
+
+.client__statement {
+  padding: 1rem;
+}
+
+.client__statement h4,
+.client__details h4 {
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.client__statement--table {
+  width: 100%;
+}
+
+.client__statement--table th {
+  font-size: 1.6rem;
+  background-color: var(--TEAL-LIGHT);
+}
+
+.client__statement--table td {
+  font-size: 1.4rem;
+}
+
+.client__statement--table th,
+.client__statement--table td {
+  border-bottom: 1px solid var(--GREY-DARK);
+  padding: 1rem;
+  text-align: left;
+}
+
+.actions-absolute {
+  position: absolute;
+  top: 1rem;
+  right: 0;
+}
+
+.actions-absolute a {
+  margin-right: 2rem;
+}
+
+.form-action {
+  display: flex;
+  justify-content: center;
+}
+
+.edit-client {
+  text-align: left;
+}
+
+.edit-client * {
+  width: 100%;
+  text-align: left;
+}
+
+.client-btn {
+  text-align: center;
+}
+
+.pricing-group,
+.registration-group,
+.contact-group,
+.bank-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-around;
+}

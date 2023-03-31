@@ -1,0 +1,79 @@
+.clients {
+  margin: 2rem;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 70% 29%;
+  grid-gap: 2rem;
+}
+
+.clients__table {
+  width: 100%;
+}
+
+.clients__table th,
+.clients__table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--GREY-DARK);
+}
+
+.clients__table th {
+  background-color: var(--TEAL-LIGHT);
+}
+
+.clients__table tbody {
+  border: 1px solid var(--GREY-MEDIUM);
+}
+
+.clients__table thead {
+  border: 1px solid var(--GREY-MEDIUM);
+  color: #333;
+  text-align: left;
+  font-size: 1.6rem;
+  height: 4rem;
+}
+
+.clients__table tbody {
+  font-size: 1.4rem;
+}
+
+.clients__form--title {
+  font-size: 1.6rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: var(--GREY-LIGHTER);
+  color: var(--FONT);
+}
+
+.form-control input,
+.form-control label,
+.form-control textarea,
+.form-control select {
+  font: inherit;
+  font-size: 1.4rem;
+}
+
+.form-control input,
+.form-control textarea,
+.form-control select {
+  width: 100%;
+}
+
+.form-control input,
+.form-control select {
+  margin-bottom: 1rem;
+  height: 3rem;
+}
+
+.clients-btn {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.grouped {
+  display: flex;
+  gap: 1rem;
+}
+
+.grouped * {
+  width: 100%;
+}

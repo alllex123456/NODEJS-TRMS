@@ -1,0 +1,54 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/statements.css" />
+<%- include('../includes/header.ejs') %> <%- include('../includes/infoBar.ejs')
+%>
+
+<main class="statements">
+  <table class="statements__table">
+    <thead>
+      <th>Client</th>
+      <th>Total</th>
+      <th class="action-column">Detalii</th>
+    </thead>
+    <tbody>
+      <% clients.forEach((item) => {%>
+      <tr>
+        <td>
+          <h4><%= item.name%></h4>
+        </td>
+
+        <td>
+          <% if (item.measurementUnit === 'characters') {%>
+          <p>
+            <%= item.statement.reduce((acc, current) => current.count *
+            current.rate / 2000 + acc, 0 )%> <%= item.currency%>
+          </p>
+          <%} %> <% if (item.measurementUnit === 'words') {%>
+          <p>
+            <%= item.statement.reduce((acc, current) => current.count *
+            current.rate / 300 + acc, 0 )%> <%= item.currency%>
+          </p>
+          <%} %> <% if (item.measurementUnit === 'word') {%>
+          <p>
+            <%= item.statement.reduce((acc, current) => current.count *
+            current.rate + acc, 0 )%> <%= item.currency%>
+          </p>
+          <%} %> <% if (item.measurementUnit === 'page') {%>
+          <p>
+            <%= item.statement.reduce((acc, current) => current.count *
+            current.rate + acc, 0 )%> <%= item.currency%>
+          </p>
+          <%} %>
+        </td>
+
+        <td>
+          <a href="clients/<%= item._id%>"><i class="ph-eye"></i></a>
+          <a href="clients/<%= item._id%>/statement"
+            ><i class="ph-download"></i
+          ></a>
+        </td>
+      </tr>
+      <%}) %>
+    </tbody>
+  </table>
+</main>

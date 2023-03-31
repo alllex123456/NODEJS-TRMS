@@ -1,0 +1,30 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/auth.css" />
+<%- include('../includes/header.ejs') %> <%- include('../includes/infoBar.ejs')
+%>
+
+<main class="auth">
+  <% if(returnMessages.errors.validationError?.length > 0) {%>
+  <div class="error"><%= returnMessages.errors.validationError%></div>
+  <%} %>
+
+  <form class="auth__form" action="/signup" method="post" novalidate>
+    <input
+      class="<%= returnMessages.errors.errorField.find(item => item.param === 'email') ? 'invalid' : '' %>"
+      type="email"
+      placeholder="adresa de email"
+      name="email"
+      value="<%= returnMessages.oldInputs.email%>"
+    />
+    <input
+      class="<%= returnMessages.errors.errorField.find(item => item.param === 'password') ? 'invalid' : '' %>"
+      type="password"
+      placeholder="parola aleasa"
+      name="password"
+      value="<%= returnMessages.oldInputs.password%>"
+    />
+    <input type="password" placeholder="repeta parola" name="repeatPassword" />
+    <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
+    <button class="confirm-btn">Sign up</button>
+  </form>
+</main>

@@ -1,0 +1,120 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/clients.css" />
+<%- include('../includes/header.ejs') %> <%- include('../includes/infoBar.ejs')
+%>
+
+<!-- RETURN MESSAGES -->
+<% if (returnMessages.errors?.length > 0) {%>
+<div class="error" id="error"><%= returnMessages.errors%></div>
+<%} %>
+
+<main class="clients">
+  <div class="clients__container">
+    <table class="clients__table">
+      <thead>
+        <tr>
+          <th>Numele</th>
+          <th>Tarif</th>
+          <th>Monedă</th>
+          <th>Telefon</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% clients.forEach((client) => {%>
+        <tr>
+          <td><a href="/clients/<%= client._id%>"><%= client.name%></a></td>
+          <td><%= client.rate%></td>
+          <td><%= client.currency%></td>
+          <td><%= client.phone%></td>
+          <td><%= client.email%></td>
+        </tr>
+        <%}) %>
+      </tbody>
+    </table>
+  </div>
+  <div class="clients__form">
+    <form action="clients/add-client" method="post">
+      <p class="clients__form--title">Adaugă client nou</p>
+      <div class="form-control">
+        <label for="name">Numele*</label>
+        <input type="text" name="name" />
+      </div>
+
+      <div class="form-control grouped">
+        <div>
+          <label for="rate">Tarif*</label>
+          <input type="number" step="0.01" name="rate" />
+        </div>
+        <div>
+          <label for="measurementUnit">Unitate de masură*</label>
+          <select name="measurementUnit">
+            <option value="">selecteaza...</option>
+            <option value="characters">2000 caractere cu spatii</option>
+            <option value="page">Pagina</option>
+            <option value="words">300 cuvinte</option>
+            <option value="word">Cuvant</option>
+          </select>
+        </div>
+        <div>
+          <label for="currency">Monedă*</label>
+          <select id="currency" name="currency">
+            <option value="">selecteaza...</option>
+            <option value="RON">RON</option>
+            <option value="EUR">EUR</option>
+            <option value="USD">USD</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-control grouped">
+        <div>
+          <label for="taxNumber">Cod fiscal</label>
+          <input type="text" name="taxNumber" />
+        </div>
+        <div>
+          <label for="registrationNumber">Număr de înregistrare</label>
+          <input type="text" name="registrationNumber" />
+        </div>
+      </div>
+
+      <div class="form-control">
+        <label for="registeredOffice">Sediul</label>
+        <input type="text" name="registeredOffice" />
+      </div>
+
+      <div class="form-control grouped">
+        <div>
+          <label for="phone">Telefon</label>
+          <input type="text" name="phone" />
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input type="email" name="email" />
+        </div>
+      </div>
+
+      <div class="form-control grouped">
+        <div>
+          <label for="bankAccount">Cont bancar</label>
+          <input type="text" name="bankAccount" />
+        </div>
+        <div>
+          <label for="bankName">Banca</label>
+          <input type="text" name="bankName" />
+        </div>
+      </div>
+
+      <div class="form-control">
+        <label for="notes">Note</label>
+        <input type="text" name="notes" />
+      </div>
+      <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
+      <button class="confirm-btn clients-btn" type="submit">
+        Înregistrează
+      </button>
+    </form>
+  </div>
+</main>
+
+<%- include('../includes/footer.ejs') %>

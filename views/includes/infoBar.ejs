@@ -1,0 +1,23 @@
+<div class="infoBar">
+  <p class="infoBar__page"><%= page%></p>
+
+  <div class="infoBar__user">
+    <% if (isLoggedIn && user) {%>
+
+    <div class="infoBar__profile" href="/profile">
+      <p><%= user.name%></p>
+      <a class="infoBar__menu--link">
+        <img class="infoBar__image" src="/<%= user.image%>" />
+      </a>
+      <div class="show-hide">
+        <form action="/logout" method="post">
+          <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
+          <button class="logout-btn" type="submit">Deconectare</button>
+        </form>
+        <a href="/profile">Profil</a>
+        <a href="/profile">Setari</a>
+      </div>
+    </div>
+    <%} %>
+  </div>
+</div>

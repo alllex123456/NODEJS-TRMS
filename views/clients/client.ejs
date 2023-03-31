@@ -1,0 +1,313 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/client.css" />
+<%- include('../includes/header.ejs') %> <%- include('../includes/infoBar.ejs')
+%>
+
+<!-- IF EDIT CLIENT -->
+<% if (editClient) {%>
+<div class="modal"></div>
+<div class="backdrop">
+  <form
+    class="edit-client"
+    action="<%= foundClient._id%>?editClient=true"
+    method="post"
+  >
+    <div class="form-control">
+      <label for="clientName">Nume</label>
+      <input
+        id="clientName"
+        type="text"
+        name="name"
+        value="<%= foundClient.name%>"
+      />
+    </div>
+
+    <div class="form-control pricing-group">
+      <section>
+        <label for="rate">Tarif</label>
+        <input
+          type="number"
+          step="0.01"
+          name="rate"
+          value="<%= foundClient.rate%>"
+        />
+      </section>
+      <section>
+        <label for="measurementUnit">Unitate de masură</label>
+        <select name="measurementUnit">
+          <option value="<%= foundClient.measurementUnit%>">
+            <% if (foundClient.measurementUnit === 'characters') {%> 2000
+            caractere cu spatii <%} else if (foundClient.measurementUnit ===
+            'words') {%> 300 cuvinte <%} else if (foundClient.measurementUnit
+            === 'word') {%> cuvant <%} else {%> pagina <%} %>
+          </option>
+          <% if (foundClient.measurementUnit !== 'characters') {%>
+          <option value="characters">2000 caractere cu spatii</option>
+          <%}%> <% if (foundClient.measurementUnit !== 'page') {%>
+          <option value="page">pagina</option>
+          <%}%> <% if (foundClient.measurementUnit !== 'words') {%>
+          <option value="words">300 cuvinte</option>
+          <%}%> <% if (foundClient.measurementUnit !== 'word') {%>
+          <option value="word">cuvant</option>
+          <%}%>
+        </select>
+      </section>
+      <section>
+        <label for="currency">Monedă</label>
+        <select id="currency" name="currency">
+          <option value="<%= foundClient.currency%>">
+            <%= foundClient.currency%>
+          </option>
+          <% if (foundClient.currency !== 'RON') {%>
+          <option value="RON">RON</option>
+          <%}%> <% if (foundClient.currency !== 'EUR') {%>
+          <option value="EUR">EUR</option>
+          <%}%> <% if (foundClient.currency !== 'USD') {%>
+          <option value="USD">USD</option>
+          <%}%>
+        </select>
+      </section>
+    </div>
+
+    <div class="form-control registration-group">
+      <section>
+        <label for="taxNumber">Cod fiscal</label>
+        <input
+          type="text"
+          name="taxNumber"
+          value="<%= foundClient.taxNumber%>"
+        />
+      </section>
+      <section>
+        <label for="registrationNumber">Număr de înregistrare</label>
+        <input
+          type="text"
+          name="registrationNumber"
+          value="<%= foundClient.registrationNumber%>"
+        />
+      </section>
+    </div>
+
+    <div class="form-control">
+      <label for="registeredOffice">Sediul</label>
+      <input
+        type="text"
+        name="registeredOffice"
+        value="<%= foundClient.registeredOffice%>"
+      />
+    </div>
+
+    <div class="form-control contact-group">
+      <section>
+        <label for="phone">Telefon</label>
+        <input type="text" name="phone" value="<%= foundClient.phone%>" />
+      </section>
+      <section>
+        <label for="email">Email</label>
+        <input type="email" name="email" value="<%= foundClient.email%>" />
+      </section>
+    </div>
+
+    <div class="form-control bank-group">
+      <section>
+        <label for="bankAccount">Cont bancar</label>
+        <input
+          type="text"
+          name="bankAccount"
+          value="<%= foundClient.bankAccount%>"
+        />
+      </section>
+      <section>
+        <label for="bankName">Banca</label>
+        <input type="text" name="bankName" value="<%= foundClient.bankName%>" />
+      </section>
+    </div>
+
+    <div class="form-control">
+      <label for="notes">Note</label>
+      <input type="text" name="notes" value="<%= foundClient.notes%>" />
+    </div>
+
+    <input type="hidden" name="clientId" value="<%= foundClient._id%>" />
+
+    <div class="form-action">
+      <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
+      <button class="confirm-btn client-btn" type="submit">Modifica</button>
+      <button class="close-modal client-btn" type="button">Anuleaza</button>
+    </div>
+  </form>
+</div>
+<%} %>
+
+<!-- IF REMOVE CLIENT -->
+<% if(removeClient) {%>
+<div class="modal"></div>
+<div class="backdrop">
+  <form action="<%= foundClient._id%>?removeClient=true" method="post">
+    <input type="hidden" name="clientId" value="<%= foundClient._id%>" />
+    <h3>Sigur doresti sa stergi acest client?</h3>
+    <div class="form-action">
+      <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
+      <button class="confirm-btn client-btn" type="submit">
+        Confirm stergerea
+      </button>
+      <button class="close-modal client-btn" type="button">Anuleaza</button>
+    </div>
+  </form>
+</div>
+<% }%>
+
+<!-- IF EDIT ORDER -->
+<% if (edit) {%>
+<div class="modal"></div>
+<div class="backdrop">
+  <form action="<%= foundOrder._id%>" method="post">
+    <div class="form-control">
+      <label for="count">Volum:</label>
+      <input
+        type="number"
+        id="count"
+        name="count"
+        value="<%= foundOrder.count%>"
+      />
+    </div>
+
+    <div class="form-control">
+      <label for="rate">Tarif:</label>
+      <input
+        type="number"
+        id="rate"
+        name="rate"
+        value="<%= foundOrder.rate%>"
+      />
+      <span><%= foundOrder.currency%></span>
+    </div>
+
+    <div class="form-control">
+      <label for="notes">Note:</label>
+      <input
+        type="text"
+        id="notes"
+        name="notes"
+        value="<%= foundOrder.notes%>"
+      />
+    </div>
+
+    <input
+      type="hidden"
+      name="orderId"
+      id="orderId"
+      value="<%= foundOrder._id%>"
+    />
+    <input type="hidden" name="clientId" value="<%= foundClient._id%>" />
+    <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
+    <div class="form-action">
+      <button type="submit" class="confirm-btn">Salveaza</button>
+      <button type="button" class="close-modal">Anuleaza</button>
+    </div>
+  </form>
+</div>
+<%} %>
+
+<!-- IF DELETE ORDER -->
+<% if(deleteOrder) {%>
+<div class="modal"></div>
+<div class="backdrop delete-backdrop">
+  <form
+    action="<%= foundOrder._id%>/delete-order?deleteOrder=true"
+    method="post"
+  >
+    <h3>Sigur doresti sa stergi aceasta comanda?</h3>
+    <div class="form-action">
+      <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
+      <button class="confirm-btn" type="submit">Confirm</button>
+      <button class="close-modal" type="button">Anuleaza</button>
+    </div>
+  </form>
+</div>
+<%} %>
+
+<main class="client">
+  <div class="client__details">
+    <div class="actions-absolute">
+      <a href="?editClient=true">Editeaza <i class="ph-pencil-simple"></i> </a>
+      <a href="?removeClient=true">Sterge <i class="ph-file-x"></i> </a>
+    </div>
+    <h4>Datele clientului</h4>
+    <div class="client__details--contact">
+      <p>Client: <%= foundClient.name%></p>
+      <p>Telefon: <%= foundClient.phone%></p>
+      <p>
+        Email:
+        <a href="mailto:<%= foundClient.email%>"><%= foundClient.email%></a>
+      </p>
+    </div>
+    <div class="client__details--pricing">
+      <p>Tarif: <%= foundClient.rate%></p>
+      <p>
+        Perceput la: <% if (foundClient.measurementUnit === 'characters') {%>
+        2000 caractere cu spatii <%} else if (foundClient.measurementUnit ===
+        'words') {%> 300 cuvinte <%} else if (foundClient.measurementUnit ===
+        'word') {%> cuvant <%} else {%> pagina <%} %>
+      </p>
+      <p>Moneda: <%= foundClient.currency%></p>
+    </div>
+    <div class="client__details--legal">
+      <p>Sediul: <%= foundClient.registeredOffice%></p>
+      <p>Numar de inregistrare: <%= foundClient.registrationNumber%></p>
+      <p>CIF: <%= foundClient.taxNumber%></p>
+      <p>
+        Cont bancar: <%= foundClient.bankAccount%> &nbsp; deschis la <%=
+        foundClient.bankName%>
+      </p>
+      <p>NOTE: <%= foundClient.notes%></p>
+    </div>
+  </div>
+
+  <div class="client__statement">
+    <h4>Situatia lucrarilor nefacturate</h4>
+    <table class="client__statement--table">
+      <thead>
+        <th>Nr. crt.</th>
+        <th>Primit la</th>
+        <th>Predat la</th>
+        <th>Termen</th>
+        <th>Tarif</th>
+        <th>Volum</th>
+        <th>Moneda</th>
+        <th>Note</th>
+        <th>Total lucrare</th>
+        <th>Actiuni</th>
+      </thead>
+      <tbody>
+        <% clientStatement.forEach((item, index) => {%>
+        <tr>
+          <td><%= index + 1%></td>
+          <td><%= item.receivedDate.toLocaleString()%></td>
+          <td><%= item.deliveredDate.toLocaleString()%></td>
+          <td><%= item.deadline.toLocaleString()%></td>
+          <td><%= item.rate%></td>
+          <td><%= item.count%></td>
+          <td><%= foundClient.currency%></td>
+          <td><%= item.notes%></td>
+          <td><%= clientPricing(item.rate, item.count)%></td>
+          <td class="client__actions">
+            <a
+              class="client__action edit"
+              href="/clients/<%= foundClient._id%>/<%= item._id%>?edit=true"
+              ><i class="ph-pencil-simple"></i
+            ></a>
+            <a
+              class="client__action remove"
+              href="/clients/<%= foundClient._id%>/<%= item._id%>?deleteOrder=true"
+              ><i class="ph-file-x"></i
+            ></a>
+          </td>
+        </tr>
+        <%})%>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<%- include('../includes/footer.ejs') %>

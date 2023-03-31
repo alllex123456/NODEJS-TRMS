@@ -1,0 +1,18 @@
+.statements__table {
+  width: 80rem;
+  margin-bottom: 3rem;
+  font-size: 1.6rem;
+  table-layout: fixed;
+}
+
+.statements__table th,
+.statements__table td {
+  padding: 1rem;
+  border-bottom: 1px solid #000;
+  text-align: left;
+  width: 25rem;
+}
+
+.action-column {
+  width: 10rem;
+}

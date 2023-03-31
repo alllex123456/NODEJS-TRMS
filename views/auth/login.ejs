@@ -1,0 +1,37 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/auth.css" />
+<%- include('../includes/header.ejs') %> <%- include('../includes/infoBar.ejs',
+{user}) %>
+
+<main class="auth">
+  <% if(returnMessages.errors.wrongEmailError?.length > 0) {%>
+  <div class="error"><%= returnMessages.errors.wrongEmailError%></div>
+  <%} %> <% if(returnMessages.errors.wrongPasswordError?.length > 0) {%>
+  <div class="error"><%= returnMessages.errors.wrongPasswordError%></div>
+  <%} %> <% if(returnMessages.errors.validationError?.length > 0) {%>
+  <div class="error"><%= returnMessages.errors.validationError%></div>
+  <%} %> <% if (returnMessages.success.successReset?.length > 0) {%>
+  <div class="success"><%= returnMessages.success.successReset%></div>
+  <%} %>
+
+  <form class="auth__form" action="/login" method="post">
+    <input
+      class="<%= returnMessages.errors.errorField.find(item => item.param === 'email') ? 'invalid' : '' %>"
+      type="email"
+      placeholder="adresa de email"
+      name="email"
+      value="<%= returnMessages.oldInputs.email%>"
+    />
+    <input
+      class="<%= returnMessages.errors.errorField.find(item => item.param === 'password') ? 'invalid' : '' %>"
+      type="password"
+      placeholder="parola"
+      name="password"
+      value="<%= returnMessages.oldInputs.password%>"
+    />
+    <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
+    <button class="confirm-btn">Autentificare</button>
+  </form>
+  <a href="/signup" class="auth-link centered">sau Inscriere...</a>
+  <a href="/reset" class="auth-link">Reseteaza parola</a>
+</main>

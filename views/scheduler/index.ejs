@@ -1,0 +1,248 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/scheduler.css" />
+<%- include('../includes/header.ejs') %> <%- include('../includes/infoBar.ejs'),
+{user} %>
+
+<!-- SUCCESS MESSAGE -->
+<% if (success?.length > 0) {%>
+<div class="success" id="success"><%= success%></div>
+<%} %> <% if (error?.length > 0) {%>
+<div class="error" id="error"><%= error%></div>
+<%} %>
+
+<!-- COMPLETE MODAL -->
+<% if (complete) {%>
+<div class="modal"></div>
+<div class="backdrop">
+  <form action="/scheduler/complete-order" method="post">
+    <ul class="backdrop__complete-list">
+      <li>Client: <%= order.clientName%></li>
+      <label>Volum final:</label>
+      <input type="number" name="count" value="<%= order.count%>" />
+      <label>Tarif final:</label>
+      <input type="number" name="rate" value="<%= order.rate%>" />
+      <li>Data primirii: <%= order.receivedDate.toLocaleString()%></li>
+      <li>Termen: <%= order.deadline.toLocaleString()%></li>
+      <li>Data predarii: <%= new Date().toLocaleString()%></li>
+      <li>Note: <%= order.notes%></li>
+      <input type="hidden" name="clientName" value="<%= order.clientName%>" />
+      <input type="hidden" name="currency" value="<%= order.currency%>" />
+      <input
+        type="hidden"
+        name="receivedDate"
+        value="<%= order.receivedDate%>"
+      />
+      <input type="hidden" name="deadline" value="<%= order.deadline%>" />
+      <input type="hidden" name="clientId" value="<%= order.clientId%>" />
+      <input type="hidden" name="deliveredDate" value="<%= new Date()%>" />
+      <input type="hidden" name="notes" value="<%= order.notes%>" />
+      <input type="hidden" name="orderId" value="<%= order._id%>" />
+    </ul>
+    <div class="form-action">
+      <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
+      <button type="submit" class="confirm-btn">Finalizeaza</button>
+      <button type="button" class="close-modal">Anuleaza</button>
+    </div>
+  </form>
+</div>
+<%} %>
+
+<!-- EDIT MODAL -->
+<% if (edit) {%>
+<div class="modal"></div>
+<div class="backdrop">
+  <form action="/scheduler/edit-order" method="post">
+    <div class="form-control">
+      <p><%= order.clientName%></p>
+    </div>
+
+    <div class="form-control">
+      <label for="count">Volum:</label>
+      <input type="number" id="count" name="count" value="<%= order.count%>" />
+    </div>
+
+    <div class="form-control">
+      <label for="rate">Tarif:</label>
+      <input type="number" id="rate" name="rate" value="<%= order.rate%>" />
+      <span><%= order.currency%></span>
+    </div>
+
+    <div class="form-control">
+      <label for="deadline">Termen:</label>
+      <input
+        type="datetime-local"
+        id="deadline"
+        name="deadline"
+        value="<%= orderDeadline%>"
+      />
+    </div>
+
+    <div class="form-control">
+      <label for="notes">Note:</label>
+      <input type="text" id="notes" name="notes" value="<%= order.notes%>" />
+    </div>
+
+    <input type="hidden" name="orderId" id="orderId" value="<%= order._id%>" />
+    <input type="hidden" name="clientId" value="<%= order.clientId%>" />
+
+    <div class="form-action">
+      <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
+      <button type="submit" class="confirm-btn">Salveaza</button>
+      <button type="button" class="close-modal">Anuleaza</button>
+    </div>
+  </form>
+</div>
+<%} %>
+
+<!-- IF DELETE ORDER -->
+<% if(deleteOrder) {%>
+<div class="modal"></div>
+<div class="backdrop delete-backdrop">
+  <form action="<%= order._id%>/delete-order" method="post">
+    <h3>Sigur doresti sa stergi aceasta comanda?</h3>
+    <div class="form-action">
+      <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
+      <button class="confirm-btn" type="submit">Confirm</button>
+      <button class="close-modal" type="button">Anuleaza</button>
+    </div>
+  </form>
+</div>
+<%} %>
+
+<main class="scheduler">
+  <div class="scheduler__list">
+    <table class="scheduler__table">
+      <thead>
+        <tr>
+          <th>Client</th>
+          <th>Volum estimat</th>
+          <th>Tarif</th>
+          <th>Moneda</th>
+          <th>Data primirii</th>
+          <th>Termen</th>
+          <th>Note</th>
+          <th>Actiuni</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% orders.forEach((order) => {%>
+        <tr>
+          <td>
+            <a href="clients/<%= order.clientId%>"><%= order.clientName%></a>
+          </td>
+          <td><%= order.count%></td>
+          <td><%= order.rate%></td>
+          <td><%= order.currency%></td>
+          <td><%= order.receivedDate.toLocaleString()%></td>
+          <td><%= order.deadline.toLocaleString()%></td>
+          <td><%= order.notes%></td>
+          <td class="scheduler__actions">
+            <a
+              class="scheduler__action complete"
+              href="/scheduler/<%= order._id%>?complete=true"
+              ><i class="ph-check"></i
+            ></a>
+            <a
+              class="scheduler__action edit"
+              href="/scheduler/<%= order._id%>?edit=true"
+              ><i class="ph-pencil-simple"></i
+            ></a>
+            <a
+              class="scheduler__action remove"
+              href="/scheduler/<%= order._id%>?deleteOrder=true"
+              ><i class="ph-file-x"></i
+            ></a>
+          </td>
+        </tr>
+        <%}) %>
+      </tbody>
+    </table>
+  </div>
+  <div class="scheduler__form">
+    <form action="/scheduler/add-order" method="post">
+      <p class="scheduler__form--title">Adauga comanda noua</p>
+      <div class="form-control">
+        <label for="client">Client*</label>
+        <select name="clientId" id="client" required>
+          <% if (setClientRate) {%>
+          <option value="<%= foundClient._id%>"><%= foundClient.name%></option>
+          <%} %>
+
+          <option value="">selecteaza...</option>
+          <% clients.forEach((client) => {%>
+          <option value="<%= client._id%>">
+            <%= client.name.toUpperCase()%>
+          </option>
+          <%}) %>
+        </select>
+      </div>
+      <div class="form-control grouped">
+        <section>
+          <label for="count">Volum estimat*</label>
+          <input type="number" name="count" id="count" required />
+        </section>
+
+        <section>
+          <label for="rate">Tarif*</label>
+          <% if(setClientRate) {%><input
+            type="number"
+            name="rate"
+            id="rate"
+            value="<%= foundClient.rate%>"
+          /><%} else {%>
+          <input type="number" name="rate" id="rate" />
+          <%} %>
+        </section>
+
+        <section>
+          <label for="rate">Unitate de masura*</label>
+          <% if(setClientRate) {%>
+          <select name="measurementUnit">
+            <option value="<%= foundClient.measurementUnit%>">
+              <% if (foundClient.measurementUnit === 'characters') {%>2000
+              caractere cu spatii<%} else if (foundClient.measurementUnit ===
+              'words') {%>300 cuvinte<%} else if (foundClient.measurementUnit
+              === 'word') {%>Cuvant<%} else {%>Pagina<%}%>
+            </option>
+          </select>
+          <%} else {%>
+          <select name="measurementUnit">
+            <option value="">selecteaza client...</option>
+          </select>
+          <%} %>
+        </section>
+
+        <section>
+          <label for="rate">Moneda*</label>
+          <% if(setClientRate) {%>
+          <select name="currency">
+            <option value="<%= foundClient.currency%>">
+              <% if (foundClient.currency === 'RON') {%>RON<%} else if
+              (foundClient.currency === 'EUR') {%>EUR<%} else {%>USD<%}%>
+            </option>
+          </select>
+          <%} else {%>
+          <select name="currency">
+            <option value="">selecteaza client...</option>
+          </select>
+          <%} %>
+        </section>
+      </div>
+
+      <div class="form-control">
+        <label for="deadline">Termen*</label>
+        <input type="datetime-local" name="deadline" id="deadline" required />
+      </div>
+      <div class="form-control">
+        <label for="notes">Note</label>
+        <textarea name="notes" id="notes" rows="5"></textarea>
+      </div>
+      <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
+      <button class="btn confirm-btn scheduler-btn" type="submit">
+        Inregistreaza comanda
+      </button>
+    </form>
+  </div>
+</main>
+
+<%- include('../includes/footer.ejs') %>

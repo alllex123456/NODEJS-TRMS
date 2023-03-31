@@ -1,0 +1,42 @@
+.statistics {
+  margin: 3rem;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.statistics__table {
+  width: 100%;
+  margin-bottom: 5rem;
+  border: 1px solid var(--VIOLET-LIGHT);
+  color: var(--GREY-DARK);
+  border-collapse: collapse;
+  font-size: 1.6rem;
+}
+
+.statistics__table th {
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--GREY-DARK);
+  text-align: left;
+}
+
+.statistics__table td {
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--GREY-DARK);
+}
+
+.total-invoice {
+  font-size: 1.8rem;
+}
+
+.heading {
+  margin-top: 2rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+p {
+  font-size: 1.4rem;
+}

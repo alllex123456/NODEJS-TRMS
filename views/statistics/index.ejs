@@ -1,0 +1,66 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/statistics.css" />
+<%- include('../includes/header.ejs') %> <%- include('../includes/infoBar.ejs',
+{user}) %>
+
+<main class="statistics">
+  <% dayFigures.forEach(count => { if ((count.countCharacters &&
+  count.countWords && count.countPage && count.countWord) !== undefined) {%>
+
+  <div>
+    <p class="total-invoice">Total de facturat <%= count.currency%></p>
+    <table class="statistics__table">
+      <thead>
+        <tr>
+          <th colspan="3">Lucrari finalizate astazi</th>
+        </tr>
+        <tr>
+          <th>Caractere</th>
+          <th>Cuvinte</th>
+          <th>Pagini</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= count.countCharacters.toLocaleString()%></td>
+          <td><%= (count.countWords + count.countWord).toLocaleString()%></td>
+          <td><%= count.countPage.toLocaleString()%></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <table class="statistics__table">
+    <thead>
+      <tr>
+        <th colspan="4">Valori realizate astazi</th>
+      </tr>
+      <tr>
+        <th>Tarifat la caractere</th>
+        <th>Tarifat la pagina</th>
+        <th>Tarifat la 300 cuvinte</th>
+        <th>Tarifat la cuvant</th>
+        <th>TOTAL</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <%= count.valueCharacters.toFixed().toLocaleString()%> <%=
+          count.currency%>
+        </td>
+        <td><%= count.valueWords.toLocaleString()%> <%= count.currency%></td>
+        <td><%= count.valueWord.toLocaleString()%> <%= count.currency%></td>
+        <td><%= count.valuePage.toLocaleString()%> <%= count.currency%></td>
+        <td>
+          <%= (count.valueCharacters + count.valuePage + count.valueWords +
+          count.valueWord).toFixed().toLocaleString()%> <%= count.currency%>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <%}}) %>
+</main>
+
+<%- include('../includes/footer.ejs') %>

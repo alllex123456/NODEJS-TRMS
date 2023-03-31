@@ -1,0 +1,82 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/profile.css" />
+<%- include('../includes/header.ejs') %> <%- include('../includes/infoBar.ejs',
+{user}) %>
+
+<!-- IF EDIT -->
+<% if (editing) {%>
+<div class="modal"></div>
+<div class="backdrop profile__backdrop">
+  <form method="post" action="profile/add-user" enctype="multipart/form-data">
+    <div>
+      <label for="userImg">Imagine profil</label>
+      <input type="file" name="image" id="userImg" value="<%= user.image%>" />
+    </div>
+    <div>
+      <label for="name">Alias</label>
+      <input type="text" name="name" id="name" value="<%= user.name%>" />
+    </div>
+    <div>
+      <label for="legalName">Denumire legală</label>
+      <input
+        type="text"
+        name="legalName"
+        id="legalName"
+        value="<%= user.legalName%>"
+      />
+    </div>
+    <div>
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" value="<%= user.email%>" />
+    </div>
+    <div>
+      <label for="registeredOffice">Sediul</label>
+      <input
+        type="text"
+        name="registeredOffice"
+        id="registeredOffice"
+        value="<%= user.registeredOffice%>"
+      />
+      <label for="taxNumber">Cod fiscal</label>
+      <input
+        type="text"
+        name="taxNumber"
+        id="taxNumber"
+        value="<%= user.taxNumber%>"
+      />
+      <label for="companyRegistration">Nr. de înregistrare/autorizație</label>
+      <input
+        type="text"
+        name="companyRegistration"
+        id="companyRegistration"
+        value="<%= user.companyRegistration%>"
+      />
+    </div>
+
+    <div class="form-action">
+      <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
+      <button type="submit" class="confirm-btn">Finalizează</button>
+      <button type="button" class="close-modal">Anulează</button>
+    </div>
+  </form>
+</div>
+<%} %>
+
+<main class="profile">
+  <div class="profile__img">
+    <img src="/<%= user.image%>" />
+  </div>
+  <div class="profile__main">
+    <h3>Alias: <%= user.name%></h3>
+    <p>Denumire legala: <%= user.legalName%></p>
+    <p>Adresa de email: <%= user.email%></p>
+  </div>
+  <div class="profile__legal">
+    <p>Sediul: <%= user.registeredOffice%></p>
+    <p>Cod fiscal: <%= user.taxNumber%></p>
+    <p>Numar de inregistrare/autorizatie: <%= user.companyRegistration%></p>
+  </div>
+  <a class="block confirm-btn" href="?editing=true">Editeaza</a>
+</main>
+
+<%- include('../includes/footer.ejs') %>

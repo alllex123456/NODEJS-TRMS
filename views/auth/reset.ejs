@@ -1,0 +1,24 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/auth.css" />
+<%- include('../includes/header.ejs') %> <%- include('../includes/infoBar.ejs')
+%>
+
+<main class="auth">
+  <% if (returnMessages.errors.tokenError?.length > 0) {%>
+  <div class="error"><%= returnMessages.errors.tokenError%></div>
+  <%} %> <% if (returnMessages.errors.emailInputError?.length > 0) {%>
+  <div class="error"><%= returnMessages.errors.emailInputError%></div>
+  <%} %>
+  <form class="auth__form" action="/reset" method="post">
+    <input
+      class="<%= returnMessages.errors.errorField.find(item => item.param === 'email') ? 'invalid' : '' %>"
+      type="email"
+      placeholder="adresa de email"
+      name="email"
+    />
+    <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
+    <button class="confirm-btn">Reseteaza parola</button>
+  </form>
+</main>
+
+<%- include('../includes/footer.ejs') %>

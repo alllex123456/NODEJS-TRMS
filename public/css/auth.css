@@ -1,0 +1,32 @@
+.auth {
+  max-width: 60rem;
+  margin: 5rem auto;
+  padding: 3rem;
+  background: var(--VIOLET-LIGHT);
+}
+
+.auth__form {
+  text-align: center;
+}
+
+.auth__form input {
+  display: block;
+  width: 100%;
+  font: inherit;
+  font-size: 1.6rem;
+  height: 3rem;
+  padding: 1rem;
+  margin: 2rem 0;
+}
+
+.auth-link {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+/* //////////////////////////// */
+.invalid {
+  border: none;
+  box-shadow: 0 0 0 3px rgba(255, 0, 0);
+}
